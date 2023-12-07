@@ -37,13 +37,13 @@ public class SbtRouterApp {
 	@Bean
 	RouterFunction<ServerResponse> getUser(SbtHandlerFunction handler) {
 		log.info("Inside route function ");
-		return RouterFunctions.route(GET("/api/user").and(accept(MediaType.APPLICATION_JSON)), handler::userList);
+		return RouterFunctions.route(GET("/api/user/{id}").and(accept(MediaType.APPLICATION_JSON)), handler::findCustomer);
 	}
 
 	@Bean
 	RouterFunction<ServerResponse> saveUser(SbtHandlerFunction handler) {
 		log.info("Inside route function ");
-		return RouterFunctions.route(POST("/api/user").and(accept(MediaType.APPLICATION_JSON)), handler::userList);
+		return RouterFunctions.route(POST("/api/user").and(accept(MediaType.APPLICATION_JSON)), handler::saveUser);
 	}
 
 }
