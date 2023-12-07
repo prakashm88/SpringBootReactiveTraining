@@ -5,6 +5,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RequestPredicates.PUT;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -19,26 +20,30 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SbtRouterApp {
 
-	public RouterFunction<ServerResponse> route(SbtHandlerFunction func) {
+	@Bean
+	RouterFunction<ServerResponse> route(SbtHandlerFunction func) {
 		log.info("Inside route function ");
 		return RouterFunctions.route(GET("/api/myflux").and(accept(MediaType.APPLICATION_JSON)), func::flux);
 
 	}
 
-	public RouterFunction<ServerResponse> getUsers(SbtHandlerFunction func) {
+	@Bean
+	RouterFunction<ServerResponse> getUsers(SbtHandlerFunction handler) {
 		log.info("Inside route function getUsers");
-		return RouterFunctions.route(GET("/api/users").and(accept(MediaType.TEXT_EVENT_STREAM)), func::userList);
+		return RouterFunctions.route(GET("/api/users").and(accept(MediaType.TEXT_EVENT_STREAM)), handler::userList);
 
 	}
 
-	public RouterFunction<ServerResponse> getUser(SbtHandlerFunction func) {
+	@Bean
+	RouterFunction<ServerResponse> getUser(SbtHandlerFunction handler) {
 		log.info("Inside route function ");
-		return RouterFunctions.route(GET("/api/user").and(accept(MediaType.APPLICATION_JSON)), func::userList);
+		return RouterFunctions.route(GET("/api/user").and(accept(MediaType.APPLICATION_JSON)), handler::userList);
 	}
-	
-	public RouterFunction<ServerResponse> saveUser(SbtHandlerFunction func) {
+
+	@Bean
+	RouterFunction<ServerResponse> saveUser(SbtHandlerFunction handler) {
 		log.info("Inside route function ");
-		return RouterFunctions.route(POST("/api/user").and(accept(MediaType.APPLICATION_JSON)), func::userList);
+		return RouterFunctions.route(POST("/api/user").and(accept(MediaType.APPLICATION_JSON)), handler::userList);
 	}
 
 }
