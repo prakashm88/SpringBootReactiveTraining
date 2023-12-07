@@ -46,7 +46,7 @@ public class SbtHandlerFunction {
 		Mono<ItgUsersDto> inputCustomer = request.bodyToMono(ItgUsersDto.class);
 
 		Mono<String> str = inputCustomer.map(u -> u.getId() + ":" + u.getName());
-		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(str, String.class);
+		return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).body(str, String.class);
 
 	}
 
